@@ -12,5 +12,7 @@ def greet():
     name = request.form['name']
     return render_template('greet.html', name=name)
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='172.31.46.22', port=5000)
+
