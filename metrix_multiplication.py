@@ -32,8 +32,8 @@
 import numpy as np
 def multiple_matrixes():    
     # Creating two random matrices
-    A = np.random.rand(100, 100)
-    B = np.random.rand(100, 100)
+    A = np.random.rand(1000, 1000)
+    B = np.random.rand(1000, 1000)
 
     # Multiplying the matrices
     C = A @ B
