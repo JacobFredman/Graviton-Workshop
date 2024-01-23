@@ -29,13 +29,20 @@
 
 
 
+import random
+import string
 import numpy as np
-def multiple_matrixes():    
-    # Creating two random matrices
-    A = np.random.rand(1000, 1000)
-    B = np.random.rand(1000, 1000)
 
-    # Multiplying the matrices
-    C = A @ B
-    return 'success101'
-    # C now contains the product of A and B
+# create a function to shortening url
+def create_short_url(url):
+    try:
+        # create a random string of length 5
+        letters = string.ascii_lowercase
+        short_url = ''.join(random.choice(letters) for i in range(10))
+        # append the random string generated to the url
+        return short_url
+    except Exception as e:
+        return str(e)
+
+# result = shorten_url('https://www.google.com/my-page-of-random-text')
+# print(result)

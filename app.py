@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
-import multiple_metrixes
-import metrix_multiplication
+import short_url
+from short_url import create_short_url
 
 app = Flask(__name__)
 
@@ -9,21 +9,17 @@ def index():
     # return render_template('index.html')
     return 'Hi everyone'
 
-@app.route('/multiple')
-def multiple():
+# get parameter from url
+@app.route('/short_url/<url>')
+def short_url(url):
     # return render_template('index.html')
-    return multiple_metrixes.multiple(5,4)
+    return create_short_url(url)
 
-@app.route('/multiple_m')
-def multiple_m():
-    # return render_template('index.html')
-    return metrix_multiplication.multiple_matrixes()
-
-@app.route('/greet', methods=['POST'])
-def greet():
-    name = request.form['name']
-    return render_template('greet.html', name=name)
-
+# post parameter from url
+@app.route('/short_url', methods=['POST'])
+def short_url_post():
+    url = request.form['url']
+    return create_short_url(url)
 
 if __name__ == '__main__':
    app.run(host="0.0.0.0", port=5000, debug=True)
