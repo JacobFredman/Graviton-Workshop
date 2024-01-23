@@ -9,12 +9,6 @@ def index():
     # return render_template('index.html')
     return 'Hi everyone'
 
-# get parameter from url
-@app.route('/short_url/<url>')
-def short_url(url):
-    # return render_template('index.html')
-    return create_short_url(url)
-
 # post parameter from url
 @app.route('/short_url', methods=['POST'])
 def short_url_post():

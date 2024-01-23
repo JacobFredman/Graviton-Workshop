@@ -28,7 +28,7 @@
 #     return 'success'
 
 
-
+from flask import jsonify
 import random
 import string
 import numpy as np
@@ -40,7 +40,7 @@ def create_short_url(url):
         letters = string.ascii_lowercase
         short_url = ''.join(random.choice(letters) for i in range(10))
         # append the random string generated to the url
-        return short_url
+        return jsonify({'short_url':short_url}) 
     except Exception as e:
         return str(e)
 
