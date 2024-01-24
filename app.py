@@ -12,7 +12,9 @@ def index():
 # post parameter from url
 @app.route('/short_url', methods=['POST'])
 def short_url_post():
-    url = request.form['url']
+    data = request.get_json()
+    url = data.get('url')
+    # url = request.form['url'] // this working if you use form from postman
     return create_short_url(url)
 
 #get full url from short url
