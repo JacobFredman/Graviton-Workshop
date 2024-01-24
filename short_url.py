@@ -31,7 +31,7 @@
 from flask import jsonify
 import random
 import string
-import numpy as np
+import boto3
 
 # create a function to shortening url
 def create_short_url(url):
@@ -39,10 +39,34 @@ def create_short_url(url):
         # create a random string of length 5
         letters = string.ascii_lowercase
         short_url = ''.join(random.choice(letters) for i in range(10))
+        save_in_dynamo(short_url, url)
         # append the random string generated to the url
         return jsonify({'short_url':short_url}) 
     except Exception as e:
         return str(e)
+    
+
+def save_in_dynamo(short_url, original_url):
+    # Create a DynamoDB resource
+    dynamodb = boto3.resource('dynamodb')
+
+    # Specify the table
+    table = dynamodb.Table('GravitonWorkshopCreateDdbCdkStack-GravitonWorkshopDdbUrlsTableF0951F41-2T5IPTGQVR9D')
+    try: 
+        # Put item in the table
+        response = table.put_item(
+        Item={
+                'short_url': short_url,
+                'original_url': original_url
+            }
+        )
+        print('save_in_dynamo')
+    except Exception as e:
+        return str(e)
+
+    return response
 
 # result = shorten_url('https://www.google.com/my-page-of-random-text')
 # print(result)
+
+create_short_url('xxjxojlkj')
