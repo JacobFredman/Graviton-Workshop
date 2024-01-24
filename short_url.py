@@ -36,7 +36,7 @@ import boto3
 # create a function to shortening url
 def create_short_url(url):
     try:
-        # create a random string of length 5
+        # create a random string of length 10
         letters = string.ascii_lowercase
         short_url = ''.join(random.choice(letters) for i in range(10))
         save_in_dynamo(short_url, url)
@@ -48,7 +48,7 @@ def create_short_url(url):
 
 def save_in_dynamo(short_url, original_url):
     # Create a DynamoDB resource
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
     # Specify the table
     table = dynamodb.Table('GravitonWorkshopCreateDdbCdkStack-GravitonWorkshopDdbUrlsTableF0951F41-2T5IPTGQVR9D')
@@ -56,8 +56,8 @@ def save_in_dynamo(short_url, original_url):
         # Put item in the table
         response = table.put_item(
         Item={
-                'short_url': short_url,
-                'original_url': original_url
+                'url': original_url,
+                'short_url': short_url
             }
         )
         print('save_in_dynamo')
@@ -65,6 +65,14 @@ def save_in_dynamo(short_url, original_url):
         return str(e)
 
     return response
+
+# def test_save_in_dynamo():
+#     short_url = 'test'
+#     original_url = 'https://www.google.com'
+#     result = save_in_dynamo(short_url, original_url)
+#     print(result)
+
+# test_save_in_dynamo()
 
 # result = shorten_url('https://www.google.com/my-page-of-random-text')
 # print(result)
