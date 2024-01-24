@@ -68,5 +68,3 @@ def save_in_dynamo(short_url, original_url):
 
 # result = shorten_url('https://www.google.com/my-page-of-random-text')
 # print(result)
-
-create_short_url('xxjxojlkj')
