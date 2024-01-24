@@ -1,37 +1,28 @@
-# import numpy as np
-# import multiprocessing
-
-# def matrix_multiply(size):
-#     # Generate two random matrices
-#     matrix_a = np.random.rand(size, size)
-#     matrix_b = np.random.rand(size, size)
-
-#     # Perform matrix multiplication
-#     result = np.dot(matrix_a, matrix_b)
-#     return result
-
-# def worker(size):
-#     while True:
-#         matrix_multiply(size)
-
-# def multiple_matrixes():
-#     # Size of the matrices (e.g., 1000x1000)
-#     matrix_size = 50
-
-#     # Number of CPU cores
-#     cpu_count = multiprocessing.cpu_count()
-
-#     # Creating processes for each core
-#     for i in range(cpu_count):
-#         p = multiprocessing.Process(target=worker, args=(matrix_size,))
-#         p.start()
-#     return 'success'
-
-
 from flask import jsonify
 import random
 import string
 import boto3
+table_name = "GravitonWorkshopCreateDdbCdkStack-GravitonWorkshopDdbUrlsTableF0951F41-9D16PC6I65SY"
+
+
+def retrive_from_dynamo(short_url):
+    # Create a DynamoDB resource
+    dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+
+    # Specify the table
+    table = dynamodb.Table(table_name)
+    try: 
+        # Get item from the table
+        response = table.get_item(
+            Key={
+                'short_url': short_url
+            }
+        )
+        print('retrive_from_dynamo')
+        return response['Item']
+    except Exception as e:
+        return str(e)
+
 
 # create a function to shortening url
 def create_short_url(url):
@@ -51,13 +42,13 @@ def save_in_dynamo(short_url, original_url):
     dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
     # Specify the table
-    table = dynamodb.Table('GravitonWorkshopCreateDdbCdkStack-GravitonWorkshopDdbUrlsTableF0951F41-2T5IPTGQVR9D')
+    table = dynamodb.Table(table_name)
     try: 
         # Put item in the table
         response = table.put_item(
         Item={
-                'url': original_url,
-                'short_url': short_url
+                'short_url': short_url,
+                'url': original_url
             }
         )
         print('save_in_dynamo')
@@ -66,13 +57,3 @@ def save_in_dynamo(short_url, original_url):
 
     return response
 
-# def test_save_in_dynamo():
-#     short_url = 'test'
-#     original_url = 'https://www.google.com'
-#     result = save_in_dynamo(short_url, original_url)
-#     print(result)
-
-# test_save_in_dynamo()
-
-# result = shorten_url('https://www.google.com/my-page-of-random-text')
-# print(result)
