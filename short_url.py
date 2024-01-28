@@ -30,7 +30,7 @@ def create_short_url(url):
         # create a random string of length 10
         letters = string.ascii_lowercase
         short_url = ''.join(random.choice(letters) for i in range(10))
-        save_in_dynamo(short_url, url)
+       # save_in_dynamo(short_url, url)
         # append the random string generated to the url
         return jsonify({'short_url':short_url}) 
     except Exception as e:
