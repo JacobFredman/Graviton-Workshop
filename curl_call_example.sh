@@ -6,4 +6,4 @@
 curl -X GET http://184.73.141.145:5000/get_full_url?short_url=jerluhvkxi
 
 # run wrk load test
-./wrk -c10 -t30 -d 1m -L -R 100 -s ./post.lua http://184.73.141.145:5000/short_url
+wrk -c30 -t30 -d 1m -L -R 100 -s ./post.lua http://3.83.251.48:5000/short_url
