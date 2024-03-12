@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # return render_template('index.html')
     return 'Hi everyone'
 
 # post parameter from url
@@ -14,7 +13,6 @@ def index():
 def short_url_post():
     data = request.get_json()
     url = data.get('url')
-    # url = request.form['url'] // this working if you use form from postman
     return create_short_url(url)
 
 #get full url from short url
