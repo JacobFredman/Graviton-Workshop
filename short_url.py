@@ -59,10 +59,10 @@ def create_short_url(url):
 
 def save_in_dynamo(short_url, original_url):
     dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
-    table_name = get_table_name()
-    table = dynamodb.Table(table_name)
 
     try: 
+        table_name = get_table_name()
+        table = dynamodb.Table(table_name)
         # Put item in the table
         response = table.put_item(
         Item={
